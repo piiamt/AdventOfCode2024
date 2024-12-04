@@ -17,3 +17,12 @@ def totaldistance(list1, list2):
         diff = abs(list1[i] - list2[i])
         distance = distance + diff
     return(distance)
+
+def similarityscore(list1, list2):
+    list1.sort()
+    list2.sort()
+    similarity = 0
+    for i in list1:
+        amount = list2.count(i)
+        similarity = similarity + i*amount
+    return(similarity)

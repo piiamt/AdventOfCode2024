@@ -6,8 +6,9 @@ def reader(filename):
         alllines = ''.join(lines)
     return(alllines)
 
-def sum_multiplications(data):
+def multiplicationslist(data):
     multiplications = []
+    # Finding all valid multiplications
     found = re.findall(r'mul\(\d+,\d+\)', data)
     for n in found:
         iend = n.find(')')
@@ -16,4 +17,22 @@ def sum_multiplications(data):
             number1,number2 = int(numbers[0]),int(numbers[1])
             multiplications.append(number1*number2)
         except: next
-    return sum(multiplications)
+    return(multiplications)
+
+def sum_multiplications(data):
+    multiplications = multiplicationslist(data)
+    # Added do() and don't()
+    dont = data.split("don't()")
+    domult = []
+    for i in range(len(dont)):
+        if i==0:
+            domult.append(sum(multiplicationslist(dont[i])))
+        else:
+            dostr = dont[i].split("do()")
+            for j in range(len(dostr)):
+                if j!=0:
+                    domult.append(sum(multiplicationslist(dostr[j])))
+    return(sum(multiplications), sum(domult))
+
+data = reader('/Users/piiamt/Documents/codes/Python/day3.txt')
+print((sum_multiplications(data)))
